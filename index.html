@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Long Peak Capital</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <meta name="description" content="Long Peak Capital — Private real estate investment in the Washington, D.C. metro area.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -49,7 +50,7 @@
 
         /* Layout */
         .page {
-            max-width: 720px;
+            max-width: 760px;
             margin: 0 auto;
             padding: 0 2rem;
             display: flex;
@@ -95,7 +96,6 @@
             gap: 1rem;
             margin-top: 3.5rem;
             width: min(300px, 60vw);
-            animation: fadeInUp 1.8s ease-out 1.0s both;
         }
         .divider-line {
             flex: 1;
@@ -112,19 +112,123 @@
             flex-shrink: 0;
         }
 
-        /* About */
-        .about {
+        /* Section */
+        .section {
             margin-top: 3.5rem;
-            max-width: 560px;
+            max-width: 600px;
+            width: 100%;
             text-align: center;
-            animation: fadeInUp 1.8s ease-out 1.2s both;
+            position: relative;
         }
-        .about p {
+
+        /* Decorative mountain watermark behind sections */
+        .section--watermark {
+            position: relative;
+        }
+        .section--watermark::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 140px;
+            background: linear-gradient(to bottom, rgba(176, 154, 96, 0.04), transparent 80%);
+            clip-path: polygon(50% 0%, 15% 100%, 85% 100%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .section-title {
+            font-size: clamp(0.8rem, 1.2vw, 0.9rem);
+            font-weight: 400;
+            letter-spacing: 0.4em;
+            text-transform: uppercase;
+            color: #5A4A28;
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section p {
             font-size: clamp(1rem, 1.5vw, 1.15rem);
             font-weight: 400;
             line-height: 1.85;
             color: #2E2720;
             letter-spacing: 0.015em;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Side-by-side cards */
+        .card-row {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .card {
+            flex: 1;
+            text-align: left;
+            padding: 2rem 1.5rem;
+            border: 1px solid rgba(176, 154, 96, 0.15);
+            background: rgba(247, 242, 232, 0.5);
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(176, 154, 96, 0.35);
+            box-shadow: 0 8px 24px rgba(58, 50, 38, 0.06);
+        }
+
+        /* Gold top accent line on cards */
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 1.5rem;
+            right: 1.5rem;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold-muted), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card-icon {
+            width: 28px;
+            height: 28px;
+            margin-bottom: 1.2rem;
+            opacity: 0.5;
+        }
+
+        .card-title {
+            font-size: clamp(0.95rem, 1.3vw, 1.1rem);
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            color: var(--brown-dark);
+            margin-bottom: 1rem;
+        }
+
+        .card p {
+            font-size: clamp(0.9rem, 1.3vw, 1.05rem);
+            line-height: 1.8;
+        }
+
+        /* Scroll reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         /* Contact section */
@@ -132,7 +236,6 @@
             margin-top: 4rem;
             width: 100%;
             max-width: 460px;
-            animation: fadeInUp 1.8s ease-out 1.5s both;
         }
 
         .contact-title {
@@ -145,7 +248,6 @@
             margin-bottom: 2rem;
         }
 
-        /* Form */
         .contact-form {
             display: flex;
             flex-direction: column;
@@ -222,31 +324,22 @@
             padding: 0.75rem 2.5rem;
             cursor: pointer;
             transition: all 0.4s ease;
-            position: relative;
         }
 
         .form-submit button:hover {
-            color: var(--brown-dark);
-            border-color: var(--gold);
             background: rgba(176, 154, 96, 0.06);
+            transform: translateY(-1px);
         }
 
-        .form-submit button:active {
-            background: rgba(176, 154, 96, 0.1);
-        }
-
-        /* Success message (shown after redirect back) */
         .form-success {
             display: none;
             text-align: center;
             padding: 1.5rem 0;
         }
-
         .form-success p {
             font-size: 1rem;
             font-weight: 400;
             color: var(--brown-mid);
-            letter-spacing: 0.02em;
         }
 
         /* Corner marks */
@@ -274,7 +367,6 @@
             margin-top: auto;
             padding: 4rem 0 2.5rem;
             text-align: center;
-            animation: fadeIn 1.8s ease-out 1.8s both;
         }
         .footer-rule {
             width: min(200px, 40vw);
@@ -292,7 +384,6 @@
             opacity: 0.6;
         }
 
-        /* Animations */
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
@@ -302,11 +393,11 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Responsive */
         @media (max-width: 600px) {
             .page { padding: 0 1.5rem; }
             .logo-section { margin-top: 3rem; }
-            .about { margin-top: 2.5rem; }
+            .section { margin-top: 2.5rem; }
+            .card-row { flex-direction: column; }
             .contact { margin-top: 3rem; }
             .form-row { flex-direction: column; gap: 1.2rem; }
             .corner-marks span { opacity: 0.12; }
@@ -315,7 +406,6 @@
 </head>
 <body>
 
-    <!-- Corner marks -->
     <div class="corner-marks">
         <span class="tl"></span>
         <span class="tr"></span>
@@ -329,7 +419,7 @@
 
         <!-- Logo -->
         <div class="logo-section">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 460" width="800" height="460">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 40 800 305" width="800" height="305">
                 <defs>
                     <linearGradient id="antiqueGold1" x1="0%" y1="0%" x2="0%" y2="100%">
                         <stop offset="0%" stop-color="#B09A60"/>
@@ -339,6 +429,16 @@
                         <stop offset="0%" stop-color="#CDB874"/>
                         <stop offset="100%" stop-color="#B09A60"/>
                     </linearGradient>
+                    <linearGradient id="snowFadeLeft" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stop-color="#F3EDE0" stop-opacity="0.85"/>
+                        <stop offset="70%" stop-color="#F3EDE0" stop-opacity="0.4"/>
+                        <stop offset="100%" stop-color="#F3EDE0" stop-opacity="0"/>
+                    </linearGradient>
+                    <linearGradient id="snowFadeRight" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stop-color="#FAF7F0" stop-opacity="0.8"/>
+                        <stop offset="70%" stop-color="#FAF7F0" stop-opacity="0.35"/>
+                        <stop offset="100%" stop-color="#FAF7F0" stop-opacity="0"/>
+                    </linearGradient>
                     <clipPath id="leftFace"><polygon points="400,55 330,210 400,210"/></clipPath>
                     <clipPath id="rightFace"><polygon points="400,55 400,210 468,210"/></clipPath>
                 </defs>
@@ -346,22 +446,34 @@
                 <polygon points="448,122 405,210 490,210" fill="#C4B48A" opacity="0.1"/>
                 <polygon points="400,55 330,210 400,210" fill="url(#antiqueGold1)" opacity="0.75"/>
                 <polygon points="400,55 400,210 468,210" fill="url(#antiqueGold2)" opacity="0.8"/>
-                <g clip-path="url(#leftFace)" opacity="0.4" stroke="#5A4A28" stroke-width="0.7" fill="none" stroke-linecap="round">
-                    <path d="M394,72 Q388,78 395,83"/><path d="M389,72 Q382,80 391,86"/>
-                    <path d="M390,90 Q383,97 391,103"/><path d="M383,92 Q375,100 384,106"/><path d="M376,95 Q368,103 377,109"/>
-                    <path d="M386,110 Q379,117 387,123"/><path d="M378,112 Q370,120 379,126"/><path d="M370,115 Q362,123 371,129"/><path d="M362,118 Q354,126 363,132"/>
-                    <path d="M382,132 Q375,139 383,145"/><path d="M374,134 Q366,142 375,148"/><path d="M366,137 Q358,145 367,151"/><path d="M358,140 Q350,148 359,154"/><path d="M350,143 Q342,151 351,157"/>
-                    <path d="M378,155 Q371,162 379,168"/><path d="M370,157 Q362,165 371,171"/><path d="M362,160 Q354,168 363,174"/><path d="M354,163 Q346,171 355,177"/><path d="M346,166 Q338,174 347,180"/><path d="M338,169 Q330,177 339,183"/>
-                    <path d="M374,180 Q367,187 375,193"/><path d="M366,182 Q358,190 367,196"/><path d="M358,185 Q350,193 359,199"/><path d="M350,188 Q342,196 351,202"/><path d="M342,191 Q334,199 343,205"/><path d="M334,194 Q326,202 335,208"/>
+                <g clip-path="url(#leftFace)" stroke="#5A4A28" stroke-width="0.3" opacity="0.12" fill="none">
+                    <line x1="330" y1="80" x2="410" y2="80"/><line x1="330" y1="86" x2="410" y2="86"/>
+                    <line x1="330" y1="92" x2="410" y2="92"/><line x1="330" y1="98" x2="410" y2="98"/>
+                    <line x1="330" y1="104" x2="410" y2="104"/><line x1="330" y1="110" x2="410" y2="110"/>
+                    <line x1="330" y1="116" x2="410" y2="116"/><line x1="330" y1="122" x2="410" y2="122"/>
+                    <line x1="330" y1="128" x2="410" y2="128"/><line x1="330" y1="134" x2="410" y2="134"/>
+                    <line x1="330" y1="140" x2="410" y2="140"/><line x1="330" y1="146" x2="410" y2="146"/>
+                    <line x1="330" y1="152" x2="410" y2="152"/><line x1="330" y1="158" x2="410" y2="158"/>
+                    <line x1="330" y1="164" x2="410" y2="164"/><line x1="330" y1="170" x2="410" y2="170"/>
+                    <line x1="330" y1="176" x2="410" y2="176"/><line x1="330" y1="182" x2="410" y2="182"/>
+                    <line x1="330" y1="188" x2="410" y2="188"/><line x1="330" y1="194" x2="410" y2="194"/>
+                    <line x1="330" y1="200" x2="410" y2="200"/><line x1="330" y1="206" x2="410" y2="206"/>
                 </g>
-                <g clip-path="url(#rightFace)" opacity="0.3" stroke="#7A6A40" stroke-width="0.7" fill="none" stroke-linecap="round">
-                    <path d="M406,72 Q412,78 405,83"/><path d="M411,72 Q418,80 409,86"/>
-                    <path d="M410,90 Q417,97 409,103"/><path d="M417,92 Q425,100 416,106"/><path d="M424,95 Q432,103 423,109"/>
-                    <path d="M414,110 Q421,117 413,123"/><path d="M422,112 Q430,120 421,126"/><path d="M430,115 Q438,123 429,129"/><path d="M436,118 Q444,126 435,132"/>
-                    <path d="M418,132 Q425,139 417,145"/><path d="M426,134 Q434,142 425,148"/><path d="M434,137 Q442,145 433,151"/><path d="M442,140 Q450,148 441,154"/><path d="M448,143 Q456,151 447,157"/>
-                    <path d="M422,155 Q429,162 421,168"/><path d="M430,157 Q438,165 429,171"/><path d="M438,160 Q446,168 437,174"/><path d="M446,163 Q454,171 445,177"/><path d="M454,166 Q462,174 453,180"/>
-                    <path d="M426,180 Q433,187 425,193"/><path d="M434,182 Q442,190 433,196"/><path d="M442,185 Q450,193 441,199"/><path d="M450,188 Q458,196 449,202"/><path d="M458,191 Q466,199 457,205"/>
+                <g clip-path="url(#rightFace)" stroke="#7A6A40" stroke-width="0.3" opacity="0.1" fill="none">
+                    <line x1="395" y1="80" x2="475" y2="80"/><line x1="395" y1="86" x2="475" y2="86"/>
+                    <line x1="395" y1="92" x2="475" y2="92"/><line x1="395" y1="98" x2="475" y2="98"/>
+                    <line x1="395" y1="104" x2="475" y2="104"/><line x1="395" y1="110" x2="475" y2="110"/>
+                    <line x1="395" y1="116" x2="475" y2="116"/><line x1="395" y1="122" x2="475" y2="122"/>
+                    <line x1="395" y1="128" x2="475" y2="128"/><line x1="395" y1="134" x2="475" y2="134"/>
+                    <line x1="395" y1="140" x2="475" y2="140"/><line x1="395" y1="146" x2="475" y2="146"/>
+                    <line x1="395" y1="152" x2="475" y2="152"/><line x1="395" y1="158" x2="475" y2="158"/>
+                    <line x1="395" y1="164" x2="475" y2="164"/><line x1="395" y1="170" x2="475" y2="170"/>
+                    <line x1="395" y1="176" x2="475" y2="176"/><line x1="395" y1="182" x2="475" y2="182"/>
+                    <line x1="395" y1="188" x2="475" y2="188"/><line x1="395" y1="194" x2="475" y2="194"/>
+                    <line x1="395" y1="200" x2="475" y2="200"/><line x1="395" y1="206" x2="475" y2="206"/>
                 </g>
+                <polygon points="400,55 372,115 400,115" fill="url(#snowFadeLeft)"/>
+                <polygon points="400,55 400,115 427,115" fill="url(#snowFadeRight)"/>
                 <line x1="400" y1="55" x2="400" y2="210" stroke="#F3EDE0" stroke-width="0.8" opacity="0.4"/>
                 <line x1="300" y1="214" x2="500" y2="214" stroke="#B09A60" stroke-width="0.4" opacity="0.4"/>
                 <text x="400" y="268" text-anchor="middle" font-family="'Cormorant Garamond','Garamond','Baskerville','Georgia',serif" font-size="44" font-weight="600" letter-spacing="14" fill="#3A3226">LONG PEAK</text>
@@ -370,48 +482,72 @@
                     <polygon points="0,-3.5 3.5,0 0,3.5 -3.5,0" fill="none" stroke="#B09A60" stroke-width="0.5" opacity="0.5"/>
                     <line x1="8" y1="0" x2="50" y2="0" stroke="#B09A60" stroke-width="0.4" opacity="0.5"/>
                 </g>
-                <text x="400" y="318" text-anchor="middle" font-family="'Cormorant Garamond','Garamond','Baskerville','Georgia',serif" font-size="16" font-weight="300" letter-spacing="18" fill="#5A4E3E">CAPITAL</text>
-                <text x="400" y="400" text-anchor="middle" font-family="'Cormorant Garamond','Garamond','Georgia',serif" font-size="9" font-weight="300" letter-spacing="5" fill="#B0A48A" opacity="0.6">WASHINGTON, D.C.</text>
+                <text x="400" y="318" text-anchor="middle" font-family="'Cormorant Garamond','Garamond','Baskerville','Georgia',serif" font-size="22" font-weight="300" letter-spacing="18" fill="#5A4E3E">CAPITAL</text>
             </svg>
         </div>
 
-        <!-- Positioning -->
         <div class="positioning">
             Private Real Estate Investment&ensp;·&ensp;Mid-Atlantic
         </div>
 
-        <!-- Divider -->
         <div class="divider">
             <div class="divider-line"></div>
             <div class="divider-diamond"></div>
             <div class="divider-line"></div>
         </div>
 
-        <!-- About -->
-        <div class="about">
+        <!-- Who We Are -->
+        <div class="section section--watermark reveal">
+            <div class="section-title">Who We Are</div>
             <p>Long Peak Capital is a private investment firm focused on acquiring and repositioning residential and commercial real estate across the Washington, D.C. metro area. We leverage direct construction capabilities to unlock value in underperforming assets, delivering efficient renovations at a fraction of market cost. Our approach is hands-on, disciplined, and built for long-term growth.</p>
         </div>
 
-        <!-- Divider -->
-        <div class="divider" style="margin-top: 3.5rem; animation-delay: 1.4s;">
+        <div class="divider reveal">
+            <div class="divider-line"></div>
+            <div class="divider-diamond"></div>
+            <div class="divider-line"></div>
+        </div>
+
+        <!-- Who We Work With -->
+        <div class="section reveal">
+            <div class="section-title">Who We Work With</div>
+
+            <div class="card-row">
+                <div class="card">
+                    <!-- Small key icon -->
+                    <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="#B09A60" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/>
+                    </svg>
+                    <div class="card-title">Real Estate Agents</div>
+                    <p>We partner with agents across the D.C. metro who bring us off-market opportunities, distressed listings, and properties with repositioning potential. Our ability to close quickly and renovate in-house makes us a reliable buyer.</p>
+                </div>
+
+                <div class="card">
+                    <!-- Small tool/wrench icon -->
+                    <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="#B09A60" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+                    </svg>
+                    <div class="card-title">Subcontractors</div>
+                    <p>We work with skilled tradespeople and specialty subcontractors who share our commitment to quality and timelines. From framing and electrical to finishes, we maintain a network of trusted partners in the region.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="divider reveal">
             <div class="divider-line"></div>
             <div class="divider-diamond"></div>
             <div class="divider-line"></div>
         </div>
 
         <!-- Contact -->
-        <div class="contact">
+        <div class="contact reveal">
             <div class="contact-title">Contact Our Team</div>
-
-            <!-- Form -->
             <div id="contact-form-container">
                 <form class="contact-form" action="https://formsubmit.co/james@longpeakcapital.com" method="POST">
-                    <!-- Formsubmit config -->
                     <input type="hidden" name="_subject" value="Long Peak Capital — New Inquiry">
                     <input type="hidden" name="_captcha" value="false">
                     <input type="hidden" name="_next" value="https://longpeakcapital.com?sent=true">
                     <input type="text" name="_honey" style="display:none">
-
                     <div class="form-row">
                         <div class="form-group">
                             <label for="name">Name</label>
@@ -422,45 +558,44 @@
                             <input type="email" id="email" name="email" required placeholder="Email address">
                         </div>
                     </div>
-
                     <div class="form-group">
                         <label for="phone">Phone</label>
                         <input type="tel" id="phone" name="phone" placeholder="Phone number (optional)">
                     </div>
-
                     <div class="form-group">
                         <label for="message">Message</label>
                         <textarea id="message" name="message" required placeholder="How can we help?"></textarea>
                     </div>
-
                     <div class="form-submit">
                         <button type="submit">Send Message</button>
                     </div>
                 </form>
             </div>
-
-            <!-- Success message -->
             <div class="form-success" id="form-success">
                 <p>Thank you for reaching out. We'll be in touch shortly.</p>
             </div>
         </div>
 
-        <!-- Footer -->
         <footer class="footer">
             <div class="footer-rule"></div>
             <div class="footer-text">&copy; 2025 Long Peak Capital</div>
         </footer>
-
     </div>
 
     <script>
-        // Show success message if redirected back after form submission
         if (window.location.search.includes('sent=true')) {
             document.getElementById('contact-form-container').style.display = 'none';
             document.getElementById('form-success').style.display = 'block';
-            // Clean URL
             history.replaceState(null, '', window.location.pathname);
         }
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.15 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
     </script>
 </body>
 </html>
