@@ -1,10 +1,466 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Long Peak Capital</title>
+    <meta name="description" content="Long Peak Capital — Private real estate investment in the Washington, D.C. metro area.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --cream: #F3EDE0;
+            --cream-light: #F7F2E8;
+            --cream-dark: #EBE3D2;
+            --gold: #B09A60;
+            --gold-dark: #8B7642;
+            --gold-muted: #C4B48A;
+            --gold-light: #D4C48E;
+            --brown-dark: #3A3226;
+            --brown-mid: #5A4E3E;
+            --brown-text: #6B5F4E;
+            --brown-light: #8B7D5E;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Cormorant Garamond', 'Garamond', 'Baskerville', 'Georgia', serif;
+            background: var(--cream);
+            color: var(--brown-dark);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Paper texture */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 100;
+            opacity: 0.025;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+            background-size: 256px 256px;
+        }
+
+        /* Layout */
+        .page {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Top rule */
+        .top-rule {
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold-muted), transparent);
+            margin-top: 3rem;
+            opacity: 0.5;
+            animation: fadeIn 1.5s ease-out 0.2s both;
+        }
+
+        /* Logo */
+        .logo-section {
+            margin-top: 4rem;
+            width: min(380px, 80vw);
+            animation: fadeInUp 1.8s ease-out 0.4s both;
+        }
+        .logo-section svg { width: 100%; height: auto; }
+
+        /* Positioning */
+        .positioning {
+            margin-top: 2.5rem;
+            font-size: clamp(0.8rem, 1.4vw, 0.95rem);
+            font-weight: 400;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: #3A3226;
+            text-align: center;
+            animation: fadeInUp 1.8s ease-out 0.8s both;
+        }
+
+        /* Divider */
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 3.5rem;
+            width: min(300px, 60vw);
+            animation: fadeInUp 1.8s ease-out 1.0s both;
+        }
+        .divider-line {
+            flex: 1;
+            height: 1px;
+            background: var(--gold-muted);
+            opacity: 0.4;
+        }
+        .divider-diamond {
+            width: 6px;
+            height: 6px;
+            border: 1px solid var(--gold);
+            transform: rotate(45deg);
+            opacity: 0.5;
+            flex-shrink: 0;
+        }
+
+        /* About */
+        .about {
+            margin-top: 3.5rem;
+            max-width: 560px;
+            text-align: center;
+            animation: fadeInUp 1.8s ease-out 1.2s both;
+        }
+        .about p {
+            font-size: clamp(1rem, 1.5vw, 1.15rem);
+            font-weight: 400;
+            line-height: 1.85;
+            color: #2E2720;
+            letter-spacing: 0.015em;
+        }
+
+        /* Contact section */
+        .contact {
+            margin-top: 4rem;
+            width: 100%;
+            max-width: 460px;
+            animation: fadeInUp 1.8s ease-out 1.5s both;
+        }
+
+        .contact-title {
+            font-size: clamp(0.8rem, 1.2vw, 0.9rem);
+            font-weight: 400;
+            letter-spacing: 0.4em;
+            text-transform: uppercase;
+            color: #5A4A28;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        /* Form */
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 1.2rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            flex: 1;
+        }
+
+        .form-group label {
+            font-size: 0.7rem;
+            font-weight: 400;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: #5A4E3E;
+            opacity: 0.85;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            font-family: 'Cormorant Garamond', 'Garamond', 'Georgia', serif;
+            font-size: 1rem;
+            font-weight: 400;
+            color: #2E2720;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid var(--gold-muted);
+            padding: 0.6rem 0;
+            outline: none;
+            transition: border-color 0.4s ease;
+            letter-spacing: 0.02em;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: #A89878;
+            opacity: 0.7;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-bottom-color: var(--gold-dark);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+            line-height: 1.7;
+        }
+
+        .form-submit {
+            margin-top: 0.8rem;
+            align-self: center;
+        }
+
+        .form-submit button {
+            font-family: 'Cormorant Garamond', 'Garamond', 'Georgia', serif;
+            font-size: 0.7rem;
+            font-weight: 400;
+            letter-spacing: 0.4em;
+            text-transform: uppercase;
+            color: #3A3226;
+            background: transparent;
+            border: 1px solid var(--gold);
+            padding: 0.75rem 2.5rem;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .form-submit button:hover {
+            color: var(--brown-dark);
+            border-color: var(--gold);
+            background: rgba(176, 154, 96, 0.06);
+        }
+
+        .form-submit button:active {
+            background: rgba(176, 154, 96, 0.1);
+        }
+
+        /* Success message (shown after redirect back) */
+        .form-success {
+            display: none;
+            text-align: center;
+            padding: 1.5rem 0;
+        }
+
+        .form-success p {
+            font-size: 1rem;
+            font-weight: 400;
+            color: var(--brown-mid);
+            letter-spacing: 0.02em;
+        }
+
+        /* Corner marks */
+        .corner-marks {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 50;
+        }
+        .corner-marks span {
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            border-color: var(--gold-muted);
+            border-style: solid;
+            opacity: 0.2;
+        }
+        .corner-marks .tl { top: 20px; left: 20px; border-width: 1px 0 0 1px; }
+        .corner-marks .tr { top: 20px; right: 20px; border-width: 1px 1px 0 0; }
+        .corner-marks .bl { bottom: 20px; left: 20px; border-width: 0 0 1px 1px; }
+        .corner-marks .br { bottom: 20px; right: 20px; border-width: 0 1px 1px 0; }
+
+        /* Footer */
+        .footer {
+            margin-top: auto;
+            padding: 4rem 0 2.5rem;
+            text-align: center;
+            animation: fadeIn 1.8s ease-out 1.8s both;
+        }
+        .footer-rule {
+            width: min(200px, 40vw);
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold-muted), transparent);
+            opacity: 0.3;
+            margin: 0 auto 1.5rem;
+        }
+        .footer-text {
+            font-size: 0.65rem;
+            font-weight: 300;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: #5A4E3E;
+            opacity: 0.6;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .page { padding: 0 1.5rem; }
+            .logo-section { margin-top: 3rem; }
+            .about { margin-top: 2.5rem; }
+            .contact { margin-top: 3rem; }
+            .form-row { flex-direction: column; gap: 1.2rem; }
+            .corner-marks span { opacity: 0.12; }
+        }
+    </style>
 </head>
 <body>
-    <h1>Long Peak Capital</h1>
-    <p>Coming soon.</p>
+
+    <!-- Corner marks -->
+    <div class="corner-marks">
+        <span class="tl"></span>
+        <span class="tr"></span>
+        <span class="bl"></span>
+        <span class="br"></span>
+    </div>
+
+    <div class="page">
+
+        <div class="top-rule"></div>
+
+        <!-- Logo -->
+        <div class="logo-section">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 460" width="800" height="460">
+                <defs>
+                    <linearGradient id="antiqueGold1" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stop-color="#B09A60"/>
+                        <stop offset="100%" stop-color="#8B7642"/>
+                    </linearGradient>
+                    <linearGradient id="antiqueGold2" x1="100%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stop-color="#CDB874"/>
+                        <stop offset="100%" stop-color="#B09A60"/>
+                    </linearGradient>
+                    <clipPath id="leftFace"><polygon points="400,55 330,210 400,210"/></clipPath>
+                    <clipPath id="rightFace"><polygon points="400,55 400,210 468,210"/></clipPath>
+                </defs>
+                <polygon points="355,115 305,210 375,210" fill="#C4B48A" opacity="0.15"/>
+                <polygon points="448,122 405,210 490,210" fill="#C4B48A" opacity="0.1"/>
+                <polygon points="400,55 330,210 400,210" fill="url(#antiqueGold1)" opacity="0.75"/>
+                <polygon points="400,55 400,210 468,210" fill="url(#antiqueGold2)" opacity="0.8"/>
+                <g clip-path="url(#leftFace)" opacity="0.4" stroke="#5A4A28" stroke-width="0.7" fill="none" stroke-linecap="round">
+                    <path d="M394,72 Q388,78 395,83"/><path d="M389,72 Q382,80 391,86"/>
+                    <path d="M390,90 Q383,97 391,103"/><path d="M383,92 Q375,100 384,106"/><path d="M376,95 Q368,103 377,109"/>
+                    <path d="M386,110 Q379,117 387,123"/><path d="M378,112 Q370,120 379,126"/><path d="M370,115 Q362,123 371,129"/><path d="M362,118 Q354,126 363,132"/>
+                    <path d="M382,132 Q375,139 383,145"/><path d="M374,134 Q366,142 375,148"/><path d="M366,137 Q358,145 367,151"/><path d="M358,140 Q350,148 359,154"/><path d="M350,143 Q342,151 351,157"/>
+                    <path d="M378,155 Q371,162 379,168"/><path d="M370,157 Q362,165 371,171"/><path d="M362,160 Q354,168 363,174"/><path d="M354,163 Q346,171 355,177"/><path d="M346,166 Q338,174 347,180"/><path d="M338,169 Q330,177 339,183"/>
+                    <path d="M374,180 Q367,187 375,193"/><path d="M366,182 Q358,190 367,196"/><path d="M358,185 Q350,193 359,199"/><path d="M350,188 Q342,196 351,202"/><path d="M342,191 Q334,199 343,205"/><path d="M334,194 Q326,202 335,208"/>
+                </g>
+                <g clip-path="url(#rightFace)" opacity="0.3" stroke="#7A6A40" stroke-width="0.7" fill="none" stroke-linecap="round">
+                    <path d="M406,72 Q412,78 405,83"/><path d="M411,72 Q418,80 409,86"/>
+                    <path d="M410,90 Q417,97 409,103"/><path d="M417,92 Q425,100 416,106"/><path d="M424,95 Q432,103 423,109"/>
+                    <path d="M414,110 Q421,117 413,123"/><path d="M422,112 Q430,120 421,126"/><path d="M430,115 Q438,123 429,129"/><path d="M436,118 Q444,126 435,132"/>
+                    <path d="M418,132 Q425,139 417,145"/><path d="M426,134 Q434,142 425,148"/><path d="M434,137 Q442,145 433,151"/><path d="M442,140 Q450,148 441,154"/><path d="M448,143 Q456,151 447,157"/>
+                    <path d="M422,155 Q429,162 421,168"/><path d="M430,157 Q438,165 429,171"/><path d="M438,160 Q446,168 437,174"/><path d="M446,163 Q454,171 445,177"/><path d="M454,166 Q462,174 453,180"/>
+                    <path d="M426,180 Q433,187 425,193"/><path d="M434,182 Q442,190 433,196"/><path d="M442,185 Q450,193 441,199"/><path d="M450,188 Q458,196 449,202"/><path d="M458,191 Q466,199 457,205"/>
+                </g>
+                <line x1="400" y1="55" x2="400" y2="210" stroke="#F3EDE0" stroke-width="0.8" opacity="0.4"/>
+                <line x1="300" y1="214" x2="500" y2="214" stroke="#B09A60" stroke-width="0.4" opacity="0.4"/>
+                <text x="400" y="268" text-anchor="middle" font-family="'Cormorant Garamond','Garamond','Baskerville','Georgia',serif" font-size="44" font-weight="600" letter-spacing="14" fill="#3A3226">LONG PEAK</text>
+                <g transform="translate(400, 288)">
+                    <line x1="-50" y1="0" x2="-8" y2="0" stroke="#B09A60" stroke-width="0.4" opacity="0.5"/>
+                    <polygon points="0,-3.5 3.5,0 0,3.5 -3.5,0" fill="none" stroke="#B09A60" stroke-width="0.5" opacity="0.5"/>
+                    <line x1="8" y1="0" x2="50" y2="0" stroke="#B09A60" stroke-width="0.4" opacity="0.5"/>
+                </g>
+                <text x="400" y="318" text-anchor="middle" font-family="'Cormorant Garamond','Garamond','Baskerville','Georgia',serif" font-size="16" font-weight="300" letter-spacing="18" fill="#5A4E3E">CAPITAL</text>
+                <text x="400" y="400" text-anchor="middle" font-family="'Cormorant Garamond','Garamond','Georgia',serif" font-size="9" font-weight="300" letter-spacing="5" fill="#B0A48A" opacity="0.6">WASHINGTON, D.C.</text>
+            </svg>
+        </div>
+
+        <!-- Positioning -->
+        <div class="positioning">
+            Private Real Estate Investment&ensp;·&ensp;Mid-Atlantic
+        </div>
+
+        <!-- Divider -->
+        <div class="divider">
+            <div class="divider-line"></div>
+            <div class="divider-diamond"></div>
+            <div class="divider-line"></div>
+        </div>
+
+        <!-- About -->
+        <div class="about">
+            <p>Long Peak Capital is a private investment firm focused on acquiring and repositioning residential and commercial real estate across the Washington, D.C. metro area. We leverage direct construction capabilities to unlock value in underperforming assets, delivering efficient renovations at a fraction of market cost. Our approach is hands-on, disciplined, and built for long-term growth.</p>
+        </div>
+
+        <!-- Divider -->
+        <div class="divider" style="margin-top: 3.5rem; animation-delay: 1.4s;">
+            <div class="divider-line"></div>
+            <div class="divider-diamond"></div>
+            <div class="divider-line"></div>
+        </div>
+
+        <!-- Contact -->
+        <div class="contact">
+            <div class="contact-title">Contact Our Team</div>
+
+            <!-- Form -->
+            <div id="contact-form-container">
+                <form class="contact-form" action="https://formsubmit.co/james@longpeakcapital.com" method="POST">
+                    <!-- Formsubmit config -->
+                    <input type="hidden" name="_subject" value="Long Peak Capital — New Inquiry">
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" name="_next" value="https://longpeakcapital.com?sent=true">
+                    <input type="text" name="_honey" style="display:none">
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required placeholder="Full name">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required placeholder="Email address">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Phone</label>
+                        <input type="tel" id="phone" name="phone" placeholder="Phone number (optional)">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" required placeholder="How can we help?"></textarea>
+                    </div>
+
+                    <div class="form-submit">
+                        <button type="submit">Send Message</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Success message -->
+            <div class="form-success" id="form-success">
+                <p>Thank you for reaching out. We'll be in touch shortly.</p>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-rule"></div>
+            <div class="footer-text">&copy; 2025 Long Peak Capital</div>
+        </footer>
+
+    </div>
+
+    <script>
+        // Show success message if redirected back after form submission
+        if (window.location.search.includes('sent=true')) {
+            document.getElementById('contact-form-container').style.display = 'none';
+            document.getElementById('form-success').style.display = 'block';
+            // Clean URL
+            history.replaceState(null, '', window.location.pathname);
+        }
+    </script>
 </body>
 </html>
